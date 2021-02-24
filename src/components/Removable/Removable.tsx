@@ -99,6 +99,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
 
       {platform === IOS &&
         <button
+          tabIndex={isRemoveActivated ? 0 : -1}
           ref={removeButtonRef}
           vkuiClass="Removable__remove"
           onClick={onRemoveClick}
