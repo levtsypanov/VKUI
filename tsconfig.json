@@ -16,6 +16,9 @@
     "isolatedModules": true,
     "noImplicitAny": true,
     "baseUrl": "src",
+    // because of the @react-aria/button bug:
+    // https://github.com/adobe/react-spectrum/issues/1388
+    "skipLibCheck": true,
     "paths": {
       "@react-playwright": ["../e2e"]
     }
