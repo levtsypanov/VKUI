@@ -9,6 +9,11 @@
   user-select: none;
 }
 
+.Button--focus-visible:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
 .Button__in {
   display: flex;
   align-items: center;
