@@ -1675,7 +1675,7 @@
     "@react-aria/utils" "^3.6.0"
     "@react-types/shared" "^3.4.0"
 
-"@react-aria/interactions@^3.2.1", "@react-aria/interactions@^3.3.0", "@react-aria/interactions@^3.3.3":
+"@react-aria/interactions@^3.3.0", "@react-aria/interactions@^3.3.3":
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/@react-aria/interactions/-/interactions-3.3.3.tgz#02852a11530f73d1ae4525cdef7c2595acde2fdc"
   integrity sha512-wq6YwVFMzT7jdpVGqGoqXPCANHl6BvOOL1Lrg3vb+df5pvoCFNWBytqv/yQVpT4PKOSUbxSBdOTubvtZlu0l+g==
@@ -1684,17 +1684,6 @@
     "@react-aria/utils" "^3.6.0"
     "@react-types/shared" "^3.4.0"
 
-"@react-aria/link@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@react-aria/link/-/link-3.1.2.tgz#0a39e44fb1a7bb30e2ef0c88e0f248462998c87a"
-  integrity sha512-ONAyB+2irMSNnv2qZKw51AwYv1GzFXAn+N4nWxreI+TIzhAA6JBkMYT9I6JFqx51UwvGI+ys0YXAMJVIBeZRvA==
-  dependencies:
-    "@babel/runtime" "^7.6.2"
-    "@react-aria/interactions" "^3.2.1"
-    "@react-aria/utils" "^3.3.0"
-    "@react-types/link" "^3.1.1"
-    "@react-types/shared" "^3.2.1"
-
 "@react-aria/ssr@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.0.1.tgz#5f7c111f9ecd184b8f6140139703c1ee552dca30"
@@ -1702,7 +1691,7 @@
   dependencies:
     "@babel/runtime" "^7.6.2"
 
-"@react-aria/utils@^3.3.0", "@react-aria/utils@^3.4.0", "@react-aria/utils@^3.6.0":
+"@react-aria/utils@^3.4.0", "@react-aria/utils@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.6.0.tgz#b7446f202469015713af8bf2812b748e694eca12"
   integrity sha512-DO5F00T5NQ7j3GGWvruV8HrEd3YcN7KfbbvKvNZ3JWHETHNJxIc2xBz4Af6FSQzAjHkOrapd++SNoNLutRSz9Q==
@@ -1743,14 +1732,6 @@
   integrity sha512-WAAqLdjf6GUWjsMN5NaFMFumOtGTq+3+48CpM0ah2L+qmhMdj1s4gvHDerhls6u4ovRK/7zhg7XK+qQwcYVqMg==
   dependencies:
     "@react-types/shared" "^3.4.0"
-
-"@react-types/link@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@react-types/link/-/link-3.1.1.tgz#6cbaa0b1e5cf1492dd59a8f8f645308848395306"
-  integrity sha512-sTyr6fEjwBWXGp/7iU/+ncO0O8YHnf53ZdB7+vOZX+7w1smQ2yVAllRHrREcnEXijMBfuoWf2i0pNqgQBdmLwQ==
-  dependencies:
-    "@react-aria/interactions" "^3.2.1"
-    "@react-types/shared" "^3.2.1"
 
 "@react-types/shared@^3.2.1", "@react-types/shared@^3.3.0", "@react-types/shared@^3.4.0":
   version "3.4.0"
