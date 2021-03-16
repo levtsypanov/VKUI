@@ -10,7 +10,6 @@ import { HasAlign } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { Platform, VKCOM } from '../../lib/platform';
-import { useFocusRing } from '@react-aria/focus';
 import { useButton } from '@react-aria/button';
 
 export interface VKUIButtonProps extends HasAlign {
@@ -95,13 +94,14 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   // looks like it's not our fault
   // @ts-ignore
   const { buttonProps } = useButton({ ...restProps, elementType: Component }, buttonRef);
-  const { isFocusVisible, focusProps } = useFocusRing();
+  // const { isFocusVisible, focusProps } = useFocusRing();
   // onPointerDown переписывает текущую логику подсветки в Tappable
   const { onPointerDown, ...restButtonProps } = buttonProps;
 
+  console.log('Button.tsx, 101, no useFocusRing');
+
   return (
     <Tappable
-      {...focusProps}
       {...restButtonProps}
       {...restProps}
       vkuiClass={
@@ -114,7 +114,6 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
           {
             'Button--str': stretched,
             'Button--with-icon': hasIcons,
-            'Button--focus-visible': isFocusVisible,
           },
         )
       }
