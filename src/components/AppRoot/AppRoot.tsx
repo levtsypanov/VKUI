@@ -6,91 +6,98 @@ import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptiv
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { classScopingMode } from '../../lib/classScopingMode';
 import { IconSettingsProvider } from '@vkontakte/icons';
+import { noop } from '../../lib/utils';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
 
 export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+  /** @deprecated Use mode="embedded" */
   embedded?: boolean;
+  /** Режим встраивания */
+  mode?: 'partial' | 'embedded' | 'full';
   window?: Window;
   /** Убирает классы без префикса (.Button) */
   noLegacyClasses?: boolean;
 }
 
-function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
-  if (sizeX === SizeType.REGULAR) {
-    container.classList.add('vkui--sizeX-regular');
-  } else {
-    container.classList.remove('vkui--sizeX-regular');
+const AppRoot: FC<AppRootProps> = ({ children, mode, embedded, sizeX, hasMouse, noLegacyClasses = false }) => {
+  if (mode && embedded) {
+    console.error(`[AppRoot] mode="${mode}" overrides embedded`);
   }
-}
+  mode = mode || (embedded ? 'embedded' : 'full');
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
-  const { window } = useDOM();
+  const { window, document } = useDOM();
 
   const initialized = useRef(false);
-
   if (!initialized.current) {
-    if (window && !embedded) {
-      window.document.documentElement.classList.add('vkui');
+    if (window && mode === 'full') {
+      document.documentElement.classList.add('vkui');
     }
     classScopingMode.noConflict = noLegacyClasses;
+    initialized.current = true;
   }
 
-  // one time initialization and cleanup
+  // setup portal
   useIsomorphicLayoutEffect(() => {
-    const doc = window.document.documentElement;
-    const body = window.document.body;
-    const parentNode = rootRef.current.parentElement;
-
-    let portal: HTMLDivElement;
-    if (embedded) {
-      portal = document.createElement('div');
-      portal.classList.add('vkui__portal-root');
-      body.appendChild(portal);
-      setPortalRoot(portal);
-      parentNode.classList.add('vkui__root', 'vkui__root--embedded');
-    } else {
-      parentNode.classList.add('vkui__root');
+    if (mode === 'full') {
+      return noop;
     }
 
-    initialized.current = true;
+    const portal = document.createElement('div');
+    portal.classList.add('vkui__portal-root');
+    document.body.appendChild(portal);
+    setPortalRoot(portal);
+    return () => portal.parentElement.removeChild(portal);
+  }, []);
+
+  // setup root classes
+  useIsomorphicLayoutEffect(() => {
+    if (mode === 'partial') {
+      return noop;
+    }
+
+    const parent = rootRef.current.parentElement;
+    const classes = ['vkui__root'].concat(mode === 'embedded' ? 'vkui__root--embedded' : []);
+    parent.classList.add(...classes);
 
     return () => {
-      if (embedded) {
-        parentNode.classList.remove('vkui__root', 'vkui__root--embedded', 'vkui--sizeX-regular');
-        portal.parentElement.removeChild(portal);
-      } else {
-        parentNode.classList.remove('vkui__root');
-        body.classList.remove('vkui__root', 'vkui--sizeX-regular');
-        doc.classList.remove('vkui');
+      parent.classList.remove(...classes);
+      if (mode === 'full') {
+        document.documentElement.classList.remove('vkui');
       }
     };
   }, []);
 
   // adaptivity handler
-  useIsomorphicLayoutEffect(
-    () => applyAdaptivityStyles(embedded ? rootRef.current.parentElement : window.document.body, sizeX),
-    [sizeX],
+  useIsomorphicLayoutEffect(() => {
+    if (mode === 'partial') {
+      return noop;
+    }
+    const container = mode === 'embedded' ? rootRef.current.parentElement : document.body;
+    if (sizeX === SizeType.REGULAR) {
+      container.classList.add('vkui--sizeX-regular');
+    }
+    return () => container.classList.remove('vkui--sizeX-regular');
+  }, [sizeX]);
+
+  const content = (
+    <AppRootContext.Provider value={{
+      appRoot: rootRef,
+      portalRoot: portalRoot,
+      embedded: mode === 'embedded',
+    }}>
+      <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+        {children}
+      </IconSettingsProvider>
+    </AppRootContext.Provider>
   );
 
-  return (
-    <div ref={rootRef} vkuiClass={classNames('AppRoot', {
-      'AppRoot--no-mouse': !hasMouse,
-    })}>
-      <AppRootContext.Provider value={{
-        appRoot: rootRef,
-        portalRoot: portalRoot,
-        embedded,
-      }}>
-        <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
-          {children}
-        </IconSettingsProvider>
-      </AppRootContext.Provider>
-    </div>
-  );
+  return mode === 'partial'
+    ? content
+    : <div ref={rootRef} vkuiClass={classNames('AppRoot', { 'AppRoot--no-mouse': !hasMouse })}>{content}</div>;
 };
 
 export default withAdaptivity(AppRoot, {
