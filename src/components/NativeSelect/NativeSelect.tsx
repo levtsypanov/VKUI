@@ -102,6 +102,8 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
         className={className}
         style={style}
         getRootRef={getRootRef}
+        disabled={disabled}
+        after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       >
         <select
           {...restProps}
@@ -116,7 +118,6 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
         </select>
         <TypographyComponent weight="regular" vkuiClass="Select__container">
           <div vkuiClass="Select__title">{this.state.title}</div>
-          {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
         </TypographyComponent>
       </FormField>
     );
