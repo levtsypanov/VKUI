@@ -125,6 +125,7 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
         className={className}
         style={style}
         getRootRef={getRootRef}
+        disabled={restProps.disabled}
       >
         <textarea
           {...restProps}
