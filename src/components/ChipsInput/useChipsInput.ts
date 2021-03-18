@@ -18,13 +18,16 @@ export const useChipsInput = <Option extends ChipsInputOption>(props: Partial<Ch
   }, [onInputChange]);
 
   const toggleOption = useCallback((newOption: Option, value?: boolean) => {
-    let newSelectedOptions = [...selectedOptions];
-    const isOptionSelected = selectedOptions.find((option: Option) => getOptionValue(newOption) === getOptionValue(option));
+    const newSelectedOptions = [...selectedOptions].reduce((acc: Option[], option: Option) => {
+      if (getOptionValue(newOption) !== getOptionValue(option)) {
+        acc.push(option);
+      }
 
-    if (isOptionSelected || value === false) {
-      newSelectedOptions = selectedOptions.filter((option: Option) => getOptionValue(option) !== getOptionValue(newOption));
-    } else if (!isOptionSelected || value === true) {
-      newSelectedOptions = [...selectedOptions, newOption];
+      return acc;
+    }, []);
+
+    if (value === true) {
+      newSelectedOptions.push(newOption);
     }
 
     setSelectedOptions(newSelectedOptions);
