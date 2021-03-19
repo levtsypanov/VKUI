@@ -50,7 +50,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
   const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
-    sizeY, after, ...restProps } = props;
+    sizeY, before, after, ...restProps } = props;
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
 
@@ -98,6 +98,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       className={className}
       style={style}
       disabled={disabled}
+      before={before}
       after={after}
     >
       <div vkuiClass="ChipsInput__container">
