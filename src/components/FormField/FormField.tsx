@@ -10,6 +10,10 @@ export interface FormFieldProps {
   /**
    * Иконка 12|16|20|24|28 или `IconButton`.
    */
+  before?: ReactNode;
+  /**
+   * Иконка 12|16|20|24|28 или `IconButton`.
+   */
   after?: ReactNode;
 }
 
@@ -26,6 +30,7 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
   Component,
   children,
   getRootRef,
+  before,
   after,
   disabled,
   sizeY,
@@ -58,6 +63,11 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
         },
       )}
     >
+      {hasReactNode(before) && (
+        <div vkuiClass="FormField__before">
+          {before}
+        </div>
+      )}
       {children}
       {hasReactNode(after) && (
         <div vkuiClass="FormField__after">
