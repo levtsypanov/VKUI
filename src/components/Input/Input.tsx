@@ -21,6 +21,7 @@ const Input: FunctionComponent<InputProps> = ({
   getRootRef,
   sizeY,
   style,
+  before,
   after,
   ...restProps
 }: InputProps) => {
@@ -31,6 +32,7 @@ const Input: FunctionComponent<InputProps> = ({
       style={style}
       className={className}
       getRootRef={getRootRef}
+      before={before}
       after={after}
       disabled={restProps.disabled}
     >

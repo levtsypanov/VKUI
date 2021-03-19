@@ -19,7 +19,7 @@ class Example extends React.Component {
           </PanelHeader>
           <Group> 
             <FormItem top="Фамилия">
-              <Input type="text" defaultValue="Петров" />
+              <Input type="text" defaultValue="Петров" before={<Icon16View/>} />
             </FormItem>
             <FormItem>
               <Input getRef={this.textInput} type="text" defaultValue="Кузнецов" after={<IconButton aria-label="Очистить поле" onClick={() => this.clear()}><Icon16Clear/></IconButton>} />
