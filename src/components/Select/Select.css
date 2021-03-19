@@ -66,7 +66,7 @@
   text-align: center;
 }
 
-.Select--multiline .Select__title {
+.Select--multiline .Select__container {
   height: auto;
   min-height: 42px;
 }

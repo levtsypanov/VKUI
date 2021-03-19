@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
@@ -20,6 +20,10 @@ export interface NativeSelectProps extends
   HasPlatform {
   defaultValue?: string;
   placeholder?: string;
+  /**
+   * Иконка 12|16|20|24|28 или `IconButton`.
+   */
+  before?: ReactNode;
 }
 
 export interface SelectState {
@@ -85,24 +89,28 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, placeholder, children, className,
-      getRef, getRootRef, disabled, sizeX, sizeY, platform, ...restProps } = this.props;
+      getRef, getRootRef, disabled, sizeX, sizeY, platform, before, ...restProps } = this.props;
 
     const TypographyComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
 
     return (
       <FormField
         Component="label"
-        vkuiClass={classNames(getClassName('Select', platform), {
-          ['Select--not-selected']: this.state.notSelected,
-          [`Select--align-${align}`]: !!align,
-          [`Select--sizeX--${sizeX}`]: !!sizeX,
-          [`Select--sizeY--${sizeY}`]: !!sizeY,
-          'Select--disabled': disabled,
-        })}
+        vkuiClass={classNames(
+          getClassName('Select', platform),
+          {
+            'Select--not-selected': this.state.notSelected,
+            [`Select--align-${align}`]: !!align,
+            'Select--disabled': disabled,
+          },
+          `Select--sizeX--${sizeX}`,
+          `Select--sizeY--${sizeY}`,
+        )}
         className={className}
         style={style}
         getRootRef={getRootRef}
         disabled={disabled}
+        before={before}
         after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       >
         <select

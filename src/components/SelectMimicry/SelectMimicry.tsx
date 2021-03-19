@@ -1,4 +1,4 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
@@ -17,6 +17,10 @@ export interface SelectMimicryProps extends
   AdaptivityProps {
   multiline?: boolean;
   disabled?: boolean;
+  /**
+   * Иконка 12|16|20|24|28 или `IconButton`.
+   */
+  before?: ReactNode;
 }
 
 const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
