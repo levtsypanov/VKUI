@@ -53,8 +53,8 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       disabled={disabled}
       after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
     >
-      <TypographyComponent weight="regular" vkuiClass="Select__container">
-        <div vkuiClass="Select__title">{children || placeholder}</div>
+      <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
+        <span vkuiClass="Select__title">{children || placeholder}</span>
       </TypographyComponent>
     </FormField>
   );
